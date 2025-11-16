@@ -1,0 +1,23 @@
+# config/config.yaml – global Hydra defaults
+author: "G-AGD experiments"
+
+run: null          # must be provided on CLI
+mode: full         # full | trial
+results_dir: results
+
+wandb:
+  entity: ""
+  project: g_agd_full
+  mode: online      # overwritten to disabled in trial
+
+optuna:
+  n_trials: 0
+  direction: maximize
+  search_space: {}
+
+training: {}
+dataset: {}
+model: {}
+logging:
+  peak_memory: false
+  log_interval: 100

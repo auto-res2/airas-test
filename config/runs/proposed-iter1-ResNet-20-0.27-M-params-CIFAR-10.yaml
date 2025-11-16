@@ -1,0 +1,52 @@
+run_id: proposed-iter1-ResNet-20-0.27-M-params-CIFAR-10
+method: proposed
+model:
+  name: resnet20
+  param_count: 270000
+  depth: 20
+  channels: [16, 32, 64]
+dataset:
+  name: cifar10
+  image_size: 32
+  num_classes: 10
+  batch_size: 128
+  augmentations:
+    random_crop: true
+    random_flip: true
+training:
+  epochs: 150
+  optimizer: g_agd
+  initial_learning_rate: 0.001
+  betas: [0.9, 0.999]
+  delta: 1.0
+  weight_decay: 0.0005
+  scheduler:
+    name: cosine
+    warmup_epochs: 5
+  seeds: [42, 43, 44]
+logging:
+  peak_memory: true
+  log_interval: 100
+optuna:
+  n_trials: 25
+  search_space:
+    learning_rate:
+      type: loguniform
+      low: 0.0001
+      high: 0.05
+    beta1:
+      type: uniform
+      low: 0.8
+      high: 0.95
+    beta2:
+      type: uniform
+      low: 0.98
+      high: 0.9999
+    delta:
+      type: uniform
+      low: 0.5
+      high: 2.0
+    weight_decay:
+      type: loguniform
+      low: 1e-06
+      high: 0.01
